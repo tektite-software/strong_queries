@@ -14,5 +14,6 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 group :test do
+  gem 'minispec-rails'
   gem 'simplecov', require: false
 end
