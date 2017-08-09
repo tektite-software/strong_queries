@@ -1,7 +1,11 @@
 require 'test_helper'
 
-class StrongQueries::Test < ActiveSupport::TestCase
-  test "truth" do
-    assert_kind_of Module, StrongQueries
+describe StrongQueries do
+  it 'is a module' do
+    StrongQueries.must_be_kind_of Module
+  end
+
+  it 'has a semantic version' do
+    StrongQueries::VERSION.must_match(/\d*\.\d*\.\d*(\..*)?/)
   end
 end
