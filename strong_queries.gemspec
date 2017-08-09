@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = StrongQueries::VERSION
   s.authors     = ["Xavier Bick"]
   s.email       = ["fxb9500@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of StrongQueries."
-  s.description = "TODO: Description of StrongQueries."
+  s.homepage    = "https://github.com/tektite-software/strong_queries"
+  s.summary     = "Better, stronger API queries for Rails"
+  s.description = "A GraphQL-inspired querying plugin for Rails with usage similar to strong_parameters."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
