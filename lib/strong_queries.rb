@@ -1,0 +1,3 @@
+module StrongQueries
+  # Your code goes here...
+end
