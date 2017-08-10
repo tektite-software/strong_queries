@@ -1,5 +1,4 @@
 require 'ruby_parser'
-require 'byebug'
 
 module StrongQueries
   class Parser
@@ -22,16 +21,22 @@ module StrongQueries
         false
       when nil
         nil
+      when :nil
+        nil
       when :lit
         exp.value
       when :str
-        if exp.value =~ /^[a-z_]*$/
+        if exp.value =~ /^[a-z0-9_]*$/
           exp.value.to_sym
         else
           exp.value
         end
       when :call
-        original_string
+        if original_string =~ /^[a-z0-9_]*$/
+          original_string.to_sym
+        else
+          original_string
+        end
       end
     end
 
