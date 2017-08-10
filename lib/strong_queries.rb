@@ -1,3 +1,4 @@
+require 'strong_queries/parser'
 require 'active_support/concern'
 require 'action_controller/metal/strong_queries'
 
