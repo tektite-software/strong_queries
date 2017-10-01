@@ -47,13 +47,18 @@ describe StrongQueries::Parser do
       query_params.must_equal({test: :symbol})
     end
 
-    it 'can parse arrays with brackets' do
-      query = 'test=[one,two,three]'
-      rack_parsed_query = Rack::Utils.parse_nested_query(query)
-      params = ActionController::Parameters.new(rack_parsed_query)
-      query_params = params.permit_query_params(:test)
+    it 'can parse arrays with brackets with and without quotes' do
+      query1 = 'test=[one,two,three]'
+      query2 = 'test=["one", "two", "three"]'
+      rack_parsed_query1 = Rack::Utils.parse_nested_query(query1)
+      rack_parsed_query2 = Rack::Utils.parse_nested_query(query2)
+      params1 = ActionController::Parameters.new(rack_parsed_query1)
+      params2 = ActionController::Parameters.new(rack_parsed_query2)
+      query_params1 = params1.permit_query_params(:test)
+      query_params2 = params2.permit_query_params(:test)
 
-      query_params.must_equal({test: ['one', 'two', 'three']})
+      query_params1.must_equal({test: [:one, :two, :three]})
+      query_params2.must_equal({test: [:one, :two, :three]})
     end
   end
 end

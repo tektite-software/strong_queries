@@ -9,12 +9,12 @@ module StrongQueries
 
     private
 
-    def handle_ruby_parser_result(exp, original_string)
-      case exp.head
+    def handle_ruby_parser_result(sexp, original_string)
+      case sexp.sexp_type
       when :hash
-        Hash[*parse_into_array(exp.value, original_string)]
+        Hash[*parse_into_array(sexp, original_string)]
       when :array
-        parse_into_array(exp.values, original_string)
+        parse_into_array(sexp, original_string)
       when :true
         true
       when :false
@@ -24,26 +24,31 @@ module StrongQueries
       when :nil
         nil
       when :lit
-        exp.value
+        sexp.value
       when :str
-        if exp.value =~ /^[a-z0-9_]*$/
-          exp.value.to_sym
+        if sexp.value.match?(/^[a-z0-9_]+$/)
+          sexp.value.to_sym
         else
-          exp.value
+          sexp.value
         end
       when :call
-        if original_string =~ /^[a-z0-9_]*$/
-          original_string.to_sym
-        else
+        if original_string.include? ' '
           original_string
+        else
+          value = sexp.values[1]
+          if value.match?(/^[a-z0-9_]+$/)
+            value.to_sym
+          else
+            value.to_s
+          end
         end
       end
     end
 
-    def parse_into_array(exp, original_string)
+    def parse_into_array(sexp, original_string)
       result = []
-      exp.map do |child_exp|
-        result << handle_ruby_parser_result(child_exp, original_string)
+      sexp.each_sexp do |child_sexp|
+        result << handle_ruby_parser_result(child_sexp, original_string)
       end
       result
     end
